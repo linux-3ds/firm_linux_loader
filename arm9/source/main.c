@@ -66,19 +66,14 @@ int main(int argc, char *argv[])
 		wait_any_key_poweroff();
 	}
 
-	if (!load_file(FALLBACK_PATH LINUXIMAGE_FILENAME, ZIMAGE_ADDR)) {
-		if (!load_file(LINUXIMAGE_FILENAME, ZIMAGE_ADDR))
-			goto error;
-	}
+	if (!load_file(LINUXIMAGE_FILENAME, ZIMAGE_ADDR))
+		goto error;
 
-	if (!load_file(FALLBACK_PATH DTB_FILENAME, PARAMS_ADDR)) {
-		if (!load_file(DTB_FILENAME, PARAMS_ADDR))
-			goto error;
-	}
+	if (!load_file(CTR_DTB_FILENAME, PARAMS_ADDR))
+		goto error;
 
-	if (!load_file(FALLBACK_PATH ARM9LINUXFW_FILENAME, ARM9LINUXFW_ADDR)) {
-		if (!load_file(ARM9LINUXFW_FILENAME, ARM9LINUXFW_ADDR))
-			Debug("Continuing without an arm9linuxfw...");
+	if (!load_file(ARM9LINUXFW_FILENAME, ARM9LINUXFW_ADDR)) {
+		Debug("Continuing without an arm9linuxfw...");
 	} else {
 		has_arm9linuxfw = 1;
 	}
