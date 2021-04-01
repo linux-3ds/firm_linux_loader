@@ -49,8 +49,14 @@ static int load_file(const char *filename, uint32_t addr)
 	return 1;
 }
 
+static bool isKtr(void)
+{
+	return (*(int*)SOCINFO & 2) != 0;
+}
+
 int main(int argc, char *argv[])
 {
+	const char* dtb_filename;
 	int has_arm9linuxfw = 0;
 
 	InitScreenFbs(argc, argv);
@@ -66,11 +72,16 @@ int main(int argc, char *argv[])
 		wait_any_key_poweroff();
 	}
 
-	if (!load_file(LINUXIMAGE_FILENAME, ZIMAGE_ADDR))
+	if (!load_file(LINUXIMAGE_FILENAME, ZIMAGE_ADDR)) {
+		Debug("Failed to load " LINUXIMAGE_FILENAME);
 		goto error;
+	}
 
-	if (!load_file(CTR_DTB_FILENAME, PARAMS_ADDR))
+	dtb_filename = isKtr() ? KTR_DTB_FILENAME : CTR_DTB_FILENAME;
+	if (!load_file(dtb_filename, PARAMS_ADDR)) {
+		Debug("Failed to load %s", dtb_filename);
 		goto error;
+	}
 
 	if (!load_file(ARM9LINUXFW_FILENAME, ARM9LINUXFW_ADDR)) {
 		Debug("Continuing without an arm9linuxfw...");
