@@ -49,14 +49,14 @@ static int load_file(const char *filename, uint32_t addr)
 	return 1;
 }
 
-static bool isKtr(void)
+static bool is_ktr(void)
 {
 	return (*(int*)SOCINFO & 2) != 0;
 }
 
 int main(int argc, char *argv[])
 {
-	const char* dtb_filename;
+	const char *dtb_filename;
 	int has_arm9linuxfw = 0;
 
 	InitScreenFbs(argc, argv);
@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
 		goto error;
 	}
 
-	dtb_filename = isKtr() ? KTR_DTB_FILENAME : CTR_DTB_FILENAME;
+	dtb_filename = is_ktr() ? KTR_DTB_FILENAME : CTR_DTB_FILENAME;
 	if (!load_file(dtb_filename, PARAMS_ADDR)) {
 		Debug("Failed to load %s", dtb_filename);
 		goto error;
