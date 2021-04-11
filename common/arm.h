@@ -3,7 +3,7 @@
 
 #ifndef __ASSEMBLY__
 
-#if __ARM_ARM < 6
+#if __ARM_ARCH < 6
 static inline void wfi(void)
 {
 	asm volatile (
