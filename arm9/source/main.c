@@ -8,6 +8,7 @@
 #include "i2c.h"
 #include "linux_config.h"
 
+__attribute__((noreturn))
 static void mcu_poweroff()
 {
 	i2cWriteRegister(I2C_DEV_MCU, 0x20, 1 << 0);
@@ -54,7 +55,6 @@ static int load_file(const char *filename, uint32_t addr)
 int main(int argc, char *argv[])
 {
 	const char *dtb_filename;
-	int has_arm9linuxfw = 0;
 
 	InitScreenFbs(argc, argv);
 	ClearScreenFull(true, true);
@@ -81,9 +81,8 @@ int main(int argc, char *argv[])
 	}
 
 	if (!load_file(ARM9LINUXFW_FILENAME, ARM9LINUXFW_ADDR)) {
-		Debug("Continuing without an arm9linuxfw...");
-	} else {
-		has_arm9linuxfw = 1;
+		Debug("Failed to load arm9linuxfw");
+		goto error;
 	}
 
 	flushCaches();
@@ -95,19 +94,8 @@ int main(int argc, char *argv[])
 
 	flushCaches();
 
-	/* Jump to the arm9linuxfw (if any) */
-	if (has_arm9linuxfw) {
-		((void (*)(void))ARM9LINUXFW_ADDR)();
-	} else {
-		/*
-		 * If we are here, there's no arm9linuxfw, so we just
-		 * busy loop in WFI state to save battery.
-		 */
-		while (1) {
-			/* Enter wait-for-interrupt state */
-			wfi();
-		}
-	}
+	/* Jump to the arm9linuxfw */
+	((void (*)(void))ARM9LINUXFW_ADDR)();
 
 error:
 	DeinitFS();
