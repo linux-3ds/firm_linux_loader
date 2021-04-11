@@ -1,5 +1,3 @@
-#include <stdbool.h>
-
 #include "arm.h"
 #include "cfg11.h"
 #include "gic.h"
