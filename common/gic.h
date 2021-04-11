@@ -54,9 +54,10 @@ static inline void gic_set_prio(int id, int prio)
 	*(volatile int*)(GIC_DIST_PRI + id) = prio;
 }
 
+// https://developer.arm.com/documentation/ddi0360/f/mpcore-distributed-interrupt-controller/interrupt-distributor-registers/interrupt-cpu-targets-registers--0x800-0x8fc?lang=en
 static inline void gic_set_target(int id, int core)
 {
-	*(volatile int*)(GIC_DIST_TARGET + id) = core + 1;
+	*(volatile int*)(GIC_DIST_TARGET + id) = BIT(core);
 }
 
 static inline void gic_enable_interrupt(int id)
