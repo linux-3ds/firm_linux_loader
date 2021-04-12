@@ -7,7 +7,7 @@ CFILES	= $(foreach dir, $(SOURCES), $(wildcard $(dir)/*.c))
 
 OBJS	= $(SFILES:.S=.o) $(CFILES:.c=.o)
 DEPS	= $(OBJS:.o=.d)
-INCLUDE	= $(foreach dir, $(INCLUDES), -I$(CURDIR)/$(dir)) -Iinclude_common
+INCLUDE	= $(foreach dir, $(INCLUDES), -I$(CURDIR)/$(dir))
 
 ARCH	= -mcpu=mpcore -march=armv6k -mlittle-endian -mthumb-interwork
 ASFLAGS	= $(ARCH) $(COMMON_ARCH) $(INCLUDE)
