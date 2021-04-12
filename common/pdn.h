@@ -6,7 +6,7 @@
 #define PDN_LGR_SOCMODE	0x10141300
 #define PDN_LGR_CNT	0x10141304
 
-#ifndef __ASSEMBLY__
+#ifndef __ASSEMBLER__
 
 static inline short get_pdn_lgr_socmode(void)
 {

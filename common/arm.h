@@ -1,7 +1,7 @@
 #ifndef _ARM_H
 #define _ARM_H
 
-#ifndef __ASSEMBLY__
+#ifndef __ASSEMBLER__
 
 #if __ARM_ARCH < 6
 static inline void wfi(void)

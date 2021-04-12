@@ -5,7 +5,7 @@
 
 #define CFG11_SOCINFO	(0x10140FFC)
 
-#ifndef __ASSEMBLY__
+#ifndef __ASSEMBLER__
 
 #include <stdbool.h>
 

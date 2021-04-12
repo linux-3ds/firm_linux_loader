@@ -6,7 +6,7 @@
 #define SCU_INV_ALL_REG		0x0C
 #define SCU_CTRL_ENABLE		(1 << 0)
 
-#ifndef __ASSEMBLY__
+#ifndef __ASSEMBLER__
 
 
 #endif

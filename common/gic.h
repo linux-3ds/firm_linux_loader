@@ -21,7 +21,7 @@
 
 #define BIT(n) (1 << (n))
 
-#ifndef __ASSEMBLY__
+#ifndef __ASSEMBLER__
 
 static inline void gic_enable_control(void) {
 	*(volatile int*)GIC_CPU_CTRL = 1;
