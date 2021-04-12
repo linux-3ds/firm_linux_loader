@@ -1,4 +1,5 @@
 #include "linux_config.h"
+#include "scu.h"
 
 @ LCD Frambuffers stuff (Physical Addresses)
 #define LCD_FB_PDC0           (0x10400400)
@@ -19,12 +20,6 @@
 #define FB_TOP_RIGHT2         (FB_TOP_RIGHT1 + FB_TOP_SIZE)
 #define FB_BOT_1              (FB_TOP_RIGHT2 + FB_TOP_SIZE)
 #define FB_BOT_2              (FB_BOT_1      + FB_BOT_SIZE)
-
-@ SCU
-#define SCU_BASE_ADDR		0x17E00000
-#define SCU_CTRL_REG		0x00
-#define SCU_INV_ALL_REG		0x0C
-#define SCU_CTRL_ENABLE		(1 << 0)
 
 	.arm
 	.section .text.start
