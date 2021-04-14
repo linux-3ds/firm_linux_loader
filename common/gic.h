@@ -13,11 +13,14 @@
  */
 
 #define GIC_CPU_CTRL		(GIC_CPU_REGS_BASE + 0x00)
+#define GIC_CPU_INTACK		(GIC_CPU_REGS_BASE + 0x0C)
+#define GIC_CPU_EOI		(GIC_CPU_REGS_BASE + 0x10)
 #define GIC_DIST_ENABLE_SET	(GIC_DIST_REGS_BASE + 0x100)
 #define GIC_DIST_ENABLE_CLEAR	(GIC_DIST_REGS_BASE + 0x180)
 #define GIC_DIST_PENDING_CLEAR	(GIC_DIST_REGS_BASE + 0x280)
 #define GIC_DIST_PRI		(GIC_DIST_REGS_BASE + 0x400)
 #define GIC_DIST_TARGET		(GIC_DIST_REGS_BASE + 0x800)
+#define GIC_DIST_SOFTINT	(GIC_DIST_REGS_BASE + 0xF00)
 
 #define BIT(n) (1 << (n))
 
@@ -55,14 +58,29 @@ static inline void gic_set_prio(int id, int prio)
 }
 
 // https://developer.arm.com/documentation/ddi0360/f/mpcore-distributed-interrupt-controller/interrupt-distributor-registers/interrupt-cpu-targets-registers--0x800-0x8fc?lang=en
-static inline void gic_set_target(int id, int core)
+static inline void gic_set_target(int id, unsigned int core)
 {
-	*(volatile int*)(GIC_DIST_TARGET + id) = BIT(core);
+	*(volatile unsigned int*)(GIC_DIST_TARGET + id) = BIT(core);
 }
 
 static inline void gic_enable_interrupt(int id)
 {
 	gic_x_interrupt((volatile int*)GIC_DIST_ENABLE_SET, id);
+}
+
+static inline void gic_send_swi(int id, unsigned int core)
+{
+	*(volatile unsigned int*)GIC_DIST_SOFTINT = BIT(core) << 16 | id;
+}
+
+static inline unsigned int gic_get_intack(void)
+{
+	return *(volatile unsigned int*)GIC_CPU_INTACK;
+}
+
+static inline void gic_set_eoi(unsigned int ack)
+{
+	*(volatile unsigned int*)GIC_CPU_EOI = ack;
 }
 
 #endif

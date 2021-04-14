@@ -148,6 +148,8 @@ wait_arm9:
 	@ Jump to the kernel!
 	bx lr
 
+.global smp_boot
+.align 4
 smp_boot:
 	@ r0 is the current CPU ID
 	ldr r1, =SYNC_ADDR
@@ -155,12 +157,14 @@ smp_boot:
 	mov r12, #0
 	str r12, [r1]
 
-wait_smpboot:
+.Lwait_smpboot:
 	ldr r12, [r1]
 	cmp r12, #0
 	wfeeq
-	beq wait_smpboot
+	beq .Lwait_smpboot
 
 	bx r12
+.type smp_boot, STT_FUNC
+.size smp_boot, . - smp_boot
 
 	.ltorg
