@@ -53,21 +53,15 @@ _start:
 	@ Clear exclusive records
 	clrex
 
-	@ Wait until ARM9 tells Linux address...
 	ldr r0, =SYNC_ADDR
 	mov r1, #0
 	str r1, [r0]
 	str r1, [r0, #4]
 	str r1, [r0, #8]
 	str r1, [r0, #12]
-wait_arm9:
-	ldr r1, [r0]
-	cmp r1, #0
-	beq wait_arm9
-
-	ldr r0, =SCU_BASE_ADDR
 
 	@ Disable SCU
+	ldr r0, =SCU_BASE_ADDR
 	ldr r1, [r0, #SCU_CTRL_REG]
 	bic r1, r1, #SCU_CTRL_ENABLE
 	str r1, [r0, #SCU_CTRL_REG]
@@ -133,6 +127,13 @@ wait_arm9:
 	str r1, [r0, #LCD_FB_SELECT_OFFSET]
 
 	@@@@@ Jump to the kernel @@@@@
+
+	@ Wait until ARM9 tells Linux address...
+	ldr r0, =SYNC_ADDR
+wait_arm9:
+	ldr r1, [r0]
+	cmp r1, #0
+	beq wait_arm9
 
 	@ Setup the registers before
 	@ jumping to the kernel entry
