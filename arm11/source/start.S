@@ -147,7 +147,7 @@ wait_arm9:
 	@ jumping to the kernel entry
 	mov r0, #0
 	ldr r1, =MACHINE_NUMBER
-	ldr r2, =PARAMS_ADDR
+	ldr r2, =DTB_ADDR
 	ldr lr, =ZIMAGE_ADDR
 
 	@ Jump to the kernel!

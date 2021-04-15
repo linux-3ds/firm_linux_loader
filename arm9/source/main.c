@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 	}
 
 	dtb_filename = is_lgr() ? KTR_DTB_FILENAME : CTR_DTB_FILENAME;
-	if (!load_file(dtb_filename, PARAMS_ADDR)) {
+	if (!load_file(dtb_filename, DTB_ADDR)) {
 		Debug("Failed to load %s", dtb_filename);
 		goto error;
 	}

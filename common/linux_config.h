@@ -1,8 +1,6 @@
 /* Linux settings */
+#define DTB_ADDR         (0x20000000)
 #define ZIMAGE_ADDR      (0x20008000)
-#define ZRELADDR         (0x20008000)
-#define PARAMS_ADDR      (0x20000100)
-#define INITRD_ADDR      (0x20000000)
 #define MACHINE_NUMBER   (0xFFFFFFFF)
 #define ARM9LINUXFW_ADDR (0x08080000)
 #define SYNC_ADDR        (0x1FFFFFF0)
