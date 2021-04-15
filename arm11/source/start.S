@@ -64,6 +64,9 @@ smp_start:
 	ldr r0, =SYNC_ADDR
 	mov r1, #0
 	str r1, [r0]
+	str r1, [r0, #4]
+	str r1, [r0, #8]
+	str r1, [r0, #12]
 wait_arm9:
 	ldr r1, [r0]
 	cmp r1, #0
@@ -154,8 +157,6 @@ smp_boot:
 	@ r0 is the current CPU ID
 	ldr r1, =SYNC_ADDR
 	add r1, r1, r0, lsl #2
-	mov r12, #0
-	str r12, [r1]
 
 .Lwait_smpboot:
 	ldr r12, [r1]
