@@ -3,9 +3,9 @@
 
 // Via: https://www.3dbrew.org/wiki/PDN_Registers
 
-#define PDN_LGR_SOCMODE	0x10141300
-#define PDN_LGR_CNT	0x10141304
-#define PDN_LGR_CPU_CNT	0x10141310
+#define PDN_LGR_SOCMODE	(0x10141300)
+#define PDN_LGR_CNT	(0x10141304)
+#define PDN_LGR_CPU_CNT	(0x10141310)
 
 #ifndef __ASSEMBLER__
 

@@ -1,7 +1,7 @@
 #ifndef _SCU_H
 #define _SCU_H
 
-#define SCU_BASE_ADDR		0x17E00000
+#define SCU_BASE_ADDR		(0x17E00000)
 
 // https://developer.arm.com/documentation/ddi0360/f/mpcore-private-memory-region/about-the-mpcore-private-memory-region/scu-specific-registers?lang=en
 #define SCU_CTRL_REG		0x00
