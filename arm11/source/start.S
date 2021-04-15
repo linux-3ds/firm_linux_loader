@@ -53,13 +53,6 @@ _start:
 	@ Clear exclusive records
 	clrex
 
-smp_start:
-	@ Get the CPUID
-	@ Branch to secondary boot if its not CPU0
-	mrc p15, 0, r0, c0, c0, 5
-	ands r0, r0, #3
-	bne smp_boot
-
 	@ Wait until ARM9 tells Linux address...
 	ldr r0, =SYNC_ADDR
 	mov r1, #0
@@ -150,6 +143,12 @@ wait_arm9:
 
 	@ Jump to the kernel!
 	bx lr
+
+smp_start:
+	@ Get the CPUID
+	mrc p15, 0, r0, c0, c0, 5
+	ands r0, r0, #3
+	@ Fall through into smp_boot
 
 .global smp_boot
 .align 4
