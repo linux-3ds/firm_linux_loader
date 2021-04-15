@@ -40,6 +40,7 @@ static void set_clock(short socmode)
 
 	// Write it back to ACK.
 	set_pdn_lgr_socmode(get_pdn_lgr_socmode());
+	gic_clear_interrupt(88);
 }
 
 static void upclock(void) { set_clock(is_lgr2() ? 0x05 : 0x03); }
@@ -51,7 +52,6 @@ static void set_socmode(void)
 	enable_fcram_l2();
 	wait_cycles(403);
 	upclock();
-	gic_clear_interrupt(88);
 }
 
 __attribute__((noreturn))
@@ -94,10 +94,8 @@ static void online_cores23(void)
 {
 	scu_set_cpu_stat(scu_get_cpu_stat() & 0x0F);
 	downclock();
-	gic_clear_interrupt(88);
 	setup_overlays();
 	upclock();
-	gic_clear_interrupt(88);
 	gic_send_swi(2, 2);
 	gic_send_swi(3, 3);
 }
