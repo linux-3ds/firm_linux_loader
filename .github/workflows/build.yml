@@ -1,18 +1,22 @@
-name: build
-on: [push, pull_request]
+name: "build"
+on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: "ubuntu-20.04"
     steps:
-    - uses: actions/checkout@v2
+    - uses: "actions/checkout@v2"
     - run: |
         sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi build-essential git python3-pip
-    - run: pip3 install -U git+https://github.com/TuxSH/firmtool.git
-    - run: make
+    - run: "pip3 install -U git+https://github.com/TuxSH/firmtool.git"
+    - run: "make"
       env:
-        CC: arm-none-eabi-gcc
-    - uses: actions/upload-artifact@v2
+        CC: "arm-none-eabi-gcc"
+    - uses: "marvinpinto/action-automatic-releases@latest"
       with:
-        name: firm_linux_loader
-        path: ./firm_linux_loader.firm
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        prerelease: false
+        title: "Development build"
+        files: |
+          firm_linux_loader.firm
