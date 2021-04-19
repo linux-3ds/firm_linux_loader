@@ -6,6 +6,7 @@ jobs:
     runs-on: "ubuntu-20.04"
     steps:
     - uses: "actions/checkout@v2"
+    - run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-7`" >> $GITHUB_ENV
     - run: |
         sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi build-essential git python3-pip
     - run: "pip3 install -U git+https://github.com/TuxSH/firmtool.git"
@@ -16,7 +17,7 @@ jobs:
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: "latest"
-        prerelease: false
-        title: "Development build"
+        prerelease: true
+        title: "Development build ${{ env.SHORT_SHA }}"
         files: |
           firm_linux_loader.firm
